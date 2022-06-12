@@ -1,7 +1,6 @@
 extends Node2D
 
-var _last_chip : RigidBody2D
-
+var _last_chip: RigidBody2D
 
 
 func _empty():
