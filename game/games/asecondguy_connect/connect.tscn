@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://games/asecondguy_connect/chip.tscn" type="PackedScene" id=1]
+[ext_resource path="res://games/asecondguy_connect/connect.gd" type="Script" id=2]
+[ext_resource path="res://games/asecondguy_connect/grid.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1124, 481 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1745, 497.5 )
+
+[node name="Connect" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="bounds" type="StaticBody2D" parent="."]
+
+[node name="right" type="CollisionShape2D" parent="bounds"]
+position = Vector2( 1505.5, 300 )
+rotation = -1.5708
+shape = SubResource( 1 )
+one_way_collision = true
+
+[node name="left" type="CollisionShape2D" parent="bounds"]
+position = Vector2( -481, 300 )
+rotation = 1.5708
+shape = SubResource( 1 )
+one_way_collision = true
+
+[node name="bottom" type="CollisionShape2D" parent="bounds"]
+position = Vector2( 500, 1097.5 )
+shape = SubResource( 2 )
+
+[node name="top" type="CollisionShape2D" parent="bounds"]
+position = Vector2( 504, -890 )
+shape = SubResource( 2 )
+
+[node name="chip" parent="." instance=ExtResource( 1 )]
+position = Vector2( 140, 511 )
+
+[node name="chip2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 108, 376 )
+
+[node name="chip3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 867, 390 )
+
+[node name="chip4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 869, 266 )
+
+[node name="chip5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 876, 140 )
+
+[node name="chip6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 114, 240 )
+
+[node name="chip7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 936, 494 )
+
+[node name="chip8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 962, 330 )
+
+[node name="Spawner1" type="Position2D" parent="."]
+position = Vector2( 76, -100 )
+
+[node name="Spawner2" type="Position2D" parent="."]
+position = Vector2( 960, -100 )
+
+[node name="grid" type="StaticBody2D" parent="."]
+position = Vector2( 250, 133 )
+script = ExtResource( 3 )
+tile_size = Vector2( 80, 78 )
