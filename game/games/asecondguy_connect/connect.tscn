@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://games/asecondguy_connect/chip.tscn" type="PackedScene" id=1]
 [ext_resource path="res://games/asecondguy_connect/connect.gd" type="Script" id=2]
@@ -9,6 +9,12 @@ extents = Vector2( 1124, 481 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1745, 497.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 404.5, 39 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 694, 830 )
 
 [node name="Connect" type="Node2D"]
 script = ExtResource( 2 )
@@ -35,6 +41,16 @@ shape = SubResource( 2 )
 position = Vector2( 504, -890 )
 shape = SubResource( 2 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bounds"]
+position = Vector2( -323, 433 )
+rotation = 0.626923
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="bounds"]
+position = Vector2( 1318, 399 )
+rotation = -0.735762
+shape = SubResource( 4 )
+
 [node name="chip" parent="." instance=ExtResource( 1 )]
 position = Vector2( 140, 511 )
 
@@ -60,12 +76,22 @@ position = Vector2( 936, 494 )
 position = Vector2( 962, 330 )
 
 [node name="Spawner1" type="Position2D" parent="."]
-position = Vector2( 76, -100 )
+position = Vector2( -270, 173 )
 
 [node name="Spawner2" type="Position2D" parent="."]
-position = Vector2( 960, -100 )
+position = Vector2( 1255, 160 )
 
 [node name="grid" type="StaticBody2D" parent="."]
 position = Vector2( 250, 133 )
 script = ExtResource( 3 )
 tile_size = Vector2( 80, 78 )
+
+[node name="PlayArea" type="Area2D" parent="."]
+position = Vector2( 527, 117 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayArea"]
+shape = SubResource( 3 )
+
+[connection signal="body_exited" from="PlayArea" to="." method="_on_PlayArea_body_exited"]

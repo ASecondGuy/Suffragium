@@ -9,6 +9,7 @@ bounce = 0.1
 radius = 39.0
 
 [node name="chip" type="RigidBody2D"]
+collision_layer = 3
 input_pickable = true
 physics_material_override = SubResource( 3 )
 gravity_scale = 10.0
