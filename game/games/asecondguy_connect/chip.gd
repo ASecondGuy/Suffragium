@@ -1,8 +1,7 @@
 extends RigidBody2D
 
-onready var _ray := $RayCast2D
-
-export var color := Color.green
+var color := Color.green
+var player_id := -1
 
 var picked := false
 

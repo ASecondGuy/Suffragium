@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://games/asecondguy_connect/chip.tscn" type="PackedScene" id=1]
 [ext_resource path="res://games/asecondguy_connect/connect.gd" type="Script" id=2]
 [ext_resource path="res://games/asecondguy_connect/grid.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 1124, 481 )
+extents = Vector2( 1124, 155 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1745, 497.5 )
@@ -22,13 +21,13 @@ script = ExtResource( 2 )
 [node name="bounds" type="StaticBody2D" parent="."]
 
 [node name="right" type="CollisionShape2D" parent="bounds"]
-position = Vector2( 1505.5, 300 )
+position = Vector2( 1179, 300 )
 rotation = -1.5708
 shape = SubResource( 1 )
 one_way_collision = true
 
 [node name="left" type="CollisionShape2D" parent="bounds"]
-position = Vector2( -481, 300 )
+position = Vector2( -155, 300 )
 rotation = 1.5708
 shape = SubResource( 1 )
 one_way_collision = true
@@ -53,32 +52,8 @@ shape = SubResource( 4 )
 
 [node name="chips" type="Node" parent="."]
 
-[node name="chip" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 140, 511 )
-
-[node name="chip2" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 108, 376 )
-
-[node name="chip3" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 867, 390 )
-
-[node name="chip4" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 869, 266 )
-
-[node name="chip5" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 876, 140 )
-
-[node name="chip6" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 114, 240 )
-
-[node name="chip7" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 936, 494 )
-
-[node name="chip8" parent="chips" instance=ExtResource( 1 )]
-position = Vector2( 962, 330 )
-
 [node name="Spawner1" type="Position2D" parent="."]
-position = Vector2( -270, 173 )
+position = Vector2( -432, 56 )
 
 [node name="Spawner2" type="Position2D" parent="."]
 position = Vector2( 1255, 160 )
@@ -97,3 +72,4 @@ collision_mask = 2
 shape = SubResource( 3 )
 
 [connection signal="body_exited" from="PlayArea" to="." method="_on_PlayArea_body_exited"]
+[connection signal="tree_exiting" from="PlayArea" to="." method="_on_PlayArea_tree_exiting"]
