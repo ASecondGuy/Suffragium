@@ -29,6 +29,8 @@ func _on_chip_input_event(_viewport, event, _shape_idx):
 
 
 func _input(event):
+	if mode == MODE_STATIC:
+		return
 	if !event is InputEventMouseButton:
 		return
 	if !event.pressed:

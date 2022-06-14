@@ -5,6 +5,9 @@ export var tile_size := Vector2(25, 25) setget set_tile_size
 export var grid_size := Vector2(7, 6) setget set_grid_size
 export var grid_color := Color.black setget set_grid_color
 
+# helper for global_to_grid_pos()
+var _bounds := Rect2(Vector2(), grid_size)
+
 
 func _ready():
 	var shape := RectangleShape2D.new()
@@ -25,6 +28,7 @@ func set_tile_size(val: Vector2):
 
 func set_grid_size(val: Vector2):
 	grid_size = val
+	_bounds = Rect2(Vector2(), grid_size)
 	update()
 
 
@@ -48,3 +52,10 @@ func _draw():
 				grid_color,
 				2
 			)
+
+
+func global_to_grid_pos(pos: Vector2):
+	var floored := ((pos - global_position) / tile_size).floor()
+	if _bounds.has_point(floored):
+		return floored
+	return Vector2(-1, -1)
