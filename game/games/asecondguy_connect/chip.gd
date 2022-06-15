@@ -3,11 +3,11 @@ extends RigidBody2D
 var color := Color.green
 var player_id := -1
 
-var picked := false
+var _picked := false
 
 
 func _integrate_forces(state):
-	if picked:
+	if _picked:
 		var move: Vector2 = get_global_mouse_position() - global_position
 
 		var result := Physics2DTestMotionResult.new()
@@ -43,11 +43,11 @@ func _draw():
 
 
 func _pick():
-	picked = true
+	_picked = true
 	inertia = 1
 	sleeping = false
 
 
 func _unpick():
-	picked = false
+	_picked = false
 	sleeping = false

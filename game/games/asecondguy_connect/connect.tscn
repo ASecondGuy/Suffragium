@@ -18,39 +18,39 @@ extents = Vector2( 694, 830 )
 [node name="Connect" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="bounds" type="StaticBody2D" parent="."]
+[node name="Bounds" type="StaticBody2D" parent="."]
 
-[node name="right" type="CollisionShape2D" parent="bounds"]
+[node name="Right" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( 1179, 300 )
 rotation = -1.5708
 shape = SubResource( 1 )
 one_way_collision = true
 
-[node name="left" type="CollisionShape2D" parent="bounds"]
+[node name="Left" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( -155, 300 )
 rotation = 1.5708
 shape = SubResource( 1 )
 one_way_collision = true
 
-[node name="bottom" type="CollisionShape2D" parent="bounds"]
+[node name="Bottom" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( 500, 1097.5 )
 shape = SubResource( 2 )
 
-[node name="top" type="CollisionShape2D" parent="bounds"]
+[node name="Top" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( 504, -890 )
 shape = SubResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bounds"]
+[node name="RampLeft" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( -323, 433 )
 rotation = 0.626923
 shape = SubResource( 4 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="bounds"]
+[node name="RampRight" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( 1318, 399 )
 rotation = -0.735762
 shape = SubResource( 4 )
 
-[node name="chips" type="Node" parent="."]
+[node name="Chips" type="Node" parent="."]
 
 [node name="Spawner1" type="Position2D" parent="."]
 position = Vector2( -432, 56 )
@@ -58,7 +58,7 @@ position = Vector2( -432, 56 )
 [node name="Spawner2" type="Position2D" parent="."]
 position = Vector2( 1255, 160 )
 
-[node name="grid" type="StaticBody2D" parent="."]
+[node name="Grid" type="StaticBody2D" parent="."]
 position = Vector2( 250, 133 )
 script = ExtResource( 3 )
 tile_size = Vector2( 80, 78 )

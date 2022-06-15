@@ -1,10 +1,5 @@
 extends Node2D
 
-onready var _play_area := $PlayArea
-onready var _grid := $grid
-onready var _chips := $chips
-onready var _spawners := [$Spawner1, $Spawner2]
-
 const END_MESSAGES := [
 	"Draw",
 	"You won",
@@ -17,10 +12,15 @@ var _end_condition := 0
 var _chips_played := 0
 var _fallen_chips := []
 
+onready var _play_area := $PlayArea
+onready var _grid := $Grid
+onready var _chips := $Chips
+onready var _spawners := [$Spawner1, $Spawner2]
+
 
 func _ready():
 	_spawn_chip(0)
-
+	# setup the code representation of all played chips
 	for _x in range(7):
 		var tmp := []
 		for _y in range(6):
@@ -29,7 +29,7 @@ func _ready():
 
 
 func _empty():
-	$bounds/bottom.set_deferred("disabled", true)
+	$Bounds/Bottom.set_deferred("disabled", true)
 	for c in _chips.get_children():
 		# set all chips back to rigid mode
 		c.set_deferred("mode", 0)
