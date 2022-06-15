@@ -11,23 +11,6 @@ var _last_chip: RigidBody2D
 var _end_condition := 0
 var _chips_played := 0
 var _fallen_chips := []
-# TODO: generate this automatically
-var _test_set := {
-	Vector2(0, 0): [Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)],
-	Vector2(0, 1): [Vector2(1, 0), Vector2(1, 1)],
-	Vector2(0, 2): [Vector2(1, 0), Vector2(1, 1)],
-	Vector2(0, 3): [Vector2(1, 0)],
-	Vector2(0, 4): [Vector2(1, 0)],
-	Vector2(0, 5): [Vector2(1, 0)],
-	Vector2(1, 0): [Vector2(0, 1), Vector2(1, 1)],
-	Vector2(2, 0): [Vector2(0, 1), Vector2(1, 1)],
-	Vector2(3, 0): [Vector2(0, 1), Vector2(1, 1), Vector2(-1, 1)],
-	Vector2(4, 0): [Vector2(0, 1), Vector2(-1, 1)],
-	Vector2(5, 0): [Vector2(-1, 1)],
-	Vector2(6, 0): [Vector2(0, 1), Vector2(-1, 1)],
-	Vector2(6, 1): [Vector2(-1, 1)],
-	Vector2(6, 2): [Vector2(-1, 1)],
-}
 
 onready var _play_area := $PlayArea
 onready var _grid := $Grid
@@ -62,6 +45,7 @@ func _on_PlayArea_body_exited(_body):
 func _on_chip_sleep(chip: RigidBody2D):
 	if !chip.sleeping:
 		return
+	_last_chip = chip
 	var grid_pos: Vector2 = _grid.global_to_grid_pos(chip.position)
 	if grid_pos.x >= 0:
 		chip.set_deferred("mode", chip.MODE_STATIC)
@@ -86,28 +70,36 @@ func _spawn_chip(player_id := 0):
 	_chips.call_deferred("add_child", chip)
 
 
-#this is inefficient but it works so it should be fine
 func _update_end_condition():
-	print("start")
-	for pos in _test_set.keys():
-		for dir in _test_set.get(pos, []):
-			var current_pos: Vector2 = pos
-			var count := 1
-			var last = _fallen_chips[current_pos.x][current_pos.y]
-			while _grid.is_in_grid(current_pos+dir):
-				current_pos += dir
-				var chip = _fallen_chips[current_pos.x][current_pos.y]
-				if last == chip:
-					count += 1
-				else:
-					count = 1
-				
-				prints(current_pos, chip, count)
-				if count == 4 and chip != null:
-					_end_condition = chip+1
-					print("huch")
-					return
-				last = chip
+	if (
+		_end_condition_line_checker(_last_chip, Vector2(-1, 0), Vector2(1, 0)) == 4  # vertical
+		or _end_condition_line_checker(_last_chip, Vector2(0, -1), Vector2(0, 1)) == 4  # horizontal
+		or _end_condition_line_checker(_last_chip, Vector2(-1, -1), Vector2(1, 1)) == 4  # diagonal_plus
+		or _end_condition_line_checker(_last_chip, Vector2(-1, 1), Vector2(1, -1)) == 4
+	):  # diagonal_minus
+		_end_condition = _last_chip.player_id + 1
+
+
+func _end_condition_line_checker(chip: RigidBody2D, left_dir: Vector2, right_dir: Vector2):
+	var count: int = 1
+	count += _end_condition_find_chip_line(chip, left_dir)
+	count += _end_condition_find_chip_line(chip, right_dir)
+	return count
+
+
+func _end_condition_find_chip_line(chip: RigidBody2D, dir: Vector2) -> int:
+	var last_chip_position: Vector2 = _grid.global_to_grid_pos(_last_chip.position)
+	var count: int = 0
+	for i in range(1, 4):
+		var pos: Vector2 = last_chip_position + (dir * i)
+		if pos.x < 0 or pos.x >= _fallen_chips.size():
+			break
+		if pos.y < 0 or pos.y >= _fallen_chips[pos.x].size():
+			break
+		if _fallen_chips[pos.x][pos.y] != chip.player_id:
+			break
+		count += 1
+	return count
 
 
 func _on_PlayArea_tree_exiting():
