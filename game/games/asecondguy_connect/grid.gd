@@ -56,6 +56,9 @@ func _draw():
 
 func global_to_grid_pos(pos: Vector2):
 	var floored := ((pos - global_position) / tile_size).floor()
-	if _bounds.has_point(floored):
+	if is_in_grid(floored):
 		return floored
 	return Vector2(-1, -1)
+
+func is_in_grid(pos:Vector2)->bool:
+	return _bounds.has_point(pos)
